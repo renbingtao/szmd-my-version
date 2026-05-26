@@ -1376,7 +1376,7 @@ endfunction
 //library YDWETriggerEvent:
 	
 //===========================================================================  
-//���ⵥλ�˺��¼� 
+//���ⵥλ�˺��¼� 
 //===========================================================================
 function YDWEAnyUnitDamagedTriggerAction takes nothing returns nothing
     local integer i= 0
@@ -1423,7 +1423,7 @@ function YDWESyStemAnyUnitDamagedRegistTrigger takes trigger trg returns nothing
     set YDWETriggerEvent__DamageEventNumber=YDWETriggerEvent__DamageEventNumber + 1
 endfunction
 //===========================================================================  
-//�ƶ���Ʒ�¼� 
+//�ƶ���Ʒ�¼� 
 //===========================================================================  
 function YDWESyStemItemUnmovableTriggerAction takes nothing returns nothing
     local integer i= 0
@@ -8720,11 +8720,10 @@ function Trig_UnitDieActions takes nothing returns nothing
     endif
     // 黑龙
     if ( ( GetUnitTypeId(GetTriggerUnit()) == 'nbwm' ) ) then
-        set udg_blackDragonDeathTime=udg_blackDragonDeathTime + 1
         call CreateItem('I02K', GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit()))
         call YDWEPolledWaitNull(36.00)
-        if udg_blackDragonDeathTime == 5 then
-            call CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'HOOH', GetRectCenterX(gg_rct_____________2), GetRectCenterY(gg_rct_____________2), 180.00)
+        if udg_LVCurrent >= 18 then
+            call CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'H00H', GetRectCenterX(gg_rct_____________2), GetRectCenterY(gg_rct_____________2), 180.00)
             call DisplayTextToForce(udg_grpOnline, "死亡之翼从黑龙体内诞生")
         else
             call CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'nbwm', GetRectCenterX(gg_rct_____________2), GetRectCenterY(gg_rct_____________2), 180.00)
@@ -8853,14 +8852,12 @@ function Trig_UnitDieActions takes nothing returns nothing
     endif
     // 死亡之翼唯一掉落
     if ( ( GetUnitTypeId(GetTriggerUnit()) == 'H00H' ) ) then
+        call CreateItem('I02K', GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit()))
         if udg_deathWingDiaoLuo == false then
-            call CreateItem('I02N', GetUnitX(GetTriggerUnit()), GetUnitY(GetTriggerUnit()))
+            call CreateItemLoc('I05H', GetUnitLoc(GetTriggerUnit()))
             set udg_deathWingDiaoLuo=true
         else
         endif
-        call CreateItemLoc('I05H', GetUnitLoc(GetTriggerUnit()))
-        call YDWEPolledWaitNull(36.00)
-        call CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'H00H', GetRectCenterX(gg_rct_____________2), GetRectCenterY(gg_rct_____________2), 180.00)
     else
     endif
     set ydl_group=null
@@ -12176,7 +12173,7 @@ function config takes nothing returns nothing
 endfunction
 //===========================================================================  
 //===========================================================================  
-//�Զ����¼� 
+//�Զ����¼� 
 //===========================================================================
 //===========================================================================   
 
