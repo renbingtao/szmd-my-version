@@ -209,6 +209,10 @@ integer udg_phoenixDeathTime= 0
 boolean udg_yikaluosidiaoluo= false
 integer udg_blackDragonDeathTime= 0
 boolean udg_deathWingDiaoLuo= false
+boolean udg_choujiangBuQu= false
+boolean udg_choujiangJueShi= false
+boolean udg_choujiangBingHun= false
+boolean udg_choujiangLieTian= false
     // Generated
 rect gg_rct__________u= null
 rect gg_rct__________004= null
@@ -7740,21 +7744,63 @@ loop
     //抽奖
 	if ( UsedItemID == 'I05J' ) then
 	    set choujiangId=GetRandomInt(1, 100)
+		    //统计已获得的稀有物品数量（后4个）
+		    set i = 0
+		    if udg_choujiangBuQu then
+		        set i = i + 1
+		    endif
+		    if udg_choujiangJueShi then
+		        set i = i + 1
+		    endif
+		    if udg_choujiangBingHun then
+		        set i = i + 1
+		    endif
+		    if udg_choujiangLieTian then
+		        set i = i + 1
+		    endif
         if ( choujiangId >= 1 and choujiangId <= 2 ) then
             //妖皇令
             call CreateItemLoc('I055', GetUnitLoc(GetTriggerUnit()))
         elseif ( choujiangId == 30 ) then
-            //不屈魂魄
-            call CreateItemLoc('I041', GetUnitLoc(GetTriggerUnit()))
+            if udg_choujiangBuQu then
+                call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex], bj_MODIFYMETHOD_ADD, 50)
+                call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex + 10], bj_MODIFYMETHOD_ADD, 50)
+            else
+                set udg_choujiangBuQu = true
+                set i = i + 1
+                call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) + i * 15)
+                call CreateItemLoc('I041', GetUnitLoc(GetTriggerUnit()))
+            endif
         elseif ( choujiangId == 40 ) then
-            //绝世凶人
-            call CreateItemLoc('I03Q', GetUnitLoc(GetTriggerUnit()))
+            if udg_choujiangJueShi then
+                call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex], bj_MODIFYMETHOD_ADD, 50)
+                call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex + 10], bj_MODIFYMETHOD_ADD, 50)
+            else
+                set udg_choujiangJueShi = true
+                set i = i + 1
+                call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) + i * 15)
+                call CreateItemLoc('I03Q', GetUnitLoc(GetTriggerUnit()))
+            endif
         elseif ( choujiangId == 60 ) then
-            //寒冰魂魄
-            call CreateItemLoc('I03T', GetUnitLoc(GetTriggerUnit()))
+            if udg_choujiangBingHun then
+                call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex], bj_MODIFYMETHOD_ADD, 50)
+                call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex + 10], bj_MODIFYMETHOD_ADD, 50)
+            else
+                set udg_choujiangBingHun = true
+                set i = i + 1
+                call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) + i * 15)
+                call CreateItemLoc('I03T', GetUnitLoc(GetTriggerUnit()))
+            endif
         elseif ( choujiangId == 70 ) then
-            //裂天
-            call CreateItemLoc('I03D', GetUnitLoc(GetTriggerUnit()))
+            if udg_choujiangLieTian then
+                call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex], bj_MODIFYMETHOD_ADD, 50)
+                call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex + 10], bj_MODIFYMETHOD_ADD, 50)
+            else
+                set udg_choujiangLieTian = true
+                set i = i + 1
+                call SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) + i * 15)
+                call CreateItemLoc('I03D', GetUnitLoc(GetTriggerUnit()))
+            endif
         else
             call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex], bj_MODIFYMETHOD_ADD, 50)
             call ModifyHeroStat(bj_HEROSTAT_STR, udg_uPlayerHeros[pIndex + 10], bj_MODIFYMETHOD_ADD, 50)
